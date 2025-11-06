@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+.smooth {
+  transition: all 0.2s ease-out;
+}
+
+.smooth-slow {
+  transition: all 0.5s ease-in;
+}
+
+.caveat {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+}
+
+.playfair {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+}
+
+.bg-card {
+  background: linear-gradient(
+      180deg,
+      rgba(155, 155, 155, 0) 0.25%,
+      rgba(231, 231, 231, 0.22) 52.35%
+    ),
+    #f0f0f0;
+}
+
+.z-lower {
+  z-index: 2;
+}
+
+.z-higher {
+  z-index: 1;
+}
