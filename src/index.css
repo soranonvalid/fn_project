@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
 @import "tailwindcss";
+
+
 
 .smooth {
   transition: all 0.2s ease-out;
@@ -34,3 +37,20 @@
 .z-higher {
   z-index: 1;
 }
+
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 3s infinite;
+}
+

@@ -65,54 +65,70 @@ const App = () => {
     getFact();
   }, []);
   return (
-    <main className="h-screen w-screen flex flex-col sm:px-20 px-4 gap-20 justify-center items-center bg-[#f1f1f1]">
-      <section className="w-full max-w-[600px] flex items-center justify-between">
-        <img height={32} width={32} src={"/logo.svg"} alt="" />
-        <p className="playfair h-min font-bold">Fakta Nguwawur</p>
+    <main className="h-screen w-screen flex flex-col sm:px-20 px-4 gap-20 justify-center items-center bg-gradient-to-tr from-[#295A8C] to-[#f1f1f1]">
+      <section className="w-full max-w-[600px] flex items-center justify-center bg-[#99D0F5] p-4 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+        <p className="font-playfair text-2xl  text-white tracking-wide drop-shadow-md hover:scale-105 transition-transform duration-300">
+          Fakta Nguwawur
+        </p>
       </section>
-      <div className={`max-w-[500px] w-full h-[500px] relative`}>
-        <div className="w-full h-full bg-card z-higher shadow-xl"></div>
-        <div className="w-full h-full bg-card shadow-xl absolute z-lower sm:top-[5%] sm:left-[5%] top-[1%] left-[1%] p-10">
-          <FactText fact={fact} trueFact={trueFact} loading={loading} />
+
+      <div className="max-w-[500px] w-full h-[500px] relative flex items-center justify-center">
+        {/* Latar belakang luar */}
+        <div className="absolute inset-0 bg-[#99D0F5] rounded-[2rem] shadow-2xl" />
+
+        {/* Card depan dengan efek kaca */}
+        <div className="relative w-[92%] h-[92%] bg-[#f1f1f1] rounded-[2rem] shadow-lg p-10 flex items-center justify-center hover:shadow-2xl overflow-hidden">
+
+          {/* Logo tengah di belakang teks */}
+          <img
+            src="/logo.svg"
+            alt="Logo"
+            height={180}
+            width={180}
+            className="absolute inset-0 m-auto opacity-15 z-0 animate-bounce-slow select-none"
+          />
+
+          {/* Teks */}
+          <div className="relative z-10 text-center">
+            <FactText fact={fact} trueFact={trueFact} loading={loading} />
+          </div>
         </div>
       </div>
-      <section className="w-full max-w-[600px] flex items-center justify-between">
+
+
+      <section className="w-full max-w-[600px] flex items-center justify-between bg-[#99D0F5] p-4 rounded-2xl shadow-lg">
         <div className="relative flex items-center">
           <button
             disabled={loading}
-            className={`smooth ${
-              loading
-                ? "opacity-35 cursor-not-allowed"
-                : "opacity-100 cursor-pointer"
-            }`}
+            className={`smooth ${loading
+              ? "opacity-35 cursor-not-allowed"
+              : "opacity-100 cursor-pointer"
+              }`}
             onClick={handleCopy}
           >
             {copied ? <Check /> : <Copy />}
           </button>
           <p
-            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] left-[150%] ${
-              copied
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 translate-x-[30%]"
-            }`}
+            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] left-[150%] ${copied
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 translate-x-[30%]"
+              }`}
           >
             copied!
           </p>
         </div>
         <p
-          className={`playfair smooth-slow ${
-            loading ? "opacity-0" : "opacity-100"
-          }`}
+          className={`playfair smooth-slow ${loading ? "opacity-0" : "opacity-100"
+            }`}
         >
           {origin == "id" ? "indonesia" : origin == "su" ? "sunda" : "jawa"}
         </p>
         <div className="relative flex items-center">
           <p
-            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] right-[150%] ${
-              loading
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 translate-x-[-30%]"
-            }`}
+            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] right-[150%] ${loading
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 translate-x-[-30%]"
+              }`}
           >
             Loading
           </p>
@@ -121,11 +137,10 @@ const App = () => {
               getFact();
             }}
             disabled={loading}
-            className={`smooth ${
-              loading
-                ? "opacity-35 cursor-not-allowed"
-                : "opacity-100 cursor-pointer"
-            }`}
+            className={`smooth ${loading
+              ? "opacity-35 cursor-not-allowed"
+              : "opacity-100 cursor-pointer"
+              }`}
           >
             <StepForward />
           </button>
