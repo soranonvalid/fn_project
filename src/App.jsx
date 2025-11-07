@@ -67,15 +67,8 @@ const App = () => {
   return (
     <main className="h-screen w-screen flex flex-col sm:px-20 px-4 gap-20 justify-center bg-[#f1f1f1] items-center text-[#2E2E2E]">
 
-      <section className="w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md bg-[#E3EAF2] hover:shadow-lg transition-all duration-300">
-        <img
-          height={48}
-          width={48}
-          src={"/logo.svg"}
-          alt="Logo"
-          className="animate-bounce-slow"
-        />
-        <p className="font-alata font-semibold text-2xl tracking-wide text-[#295A8C] drop-shadow-sm hover:scale-105 transition-transform duration-300">
+      <section className="w-full max-w-[600px] flex items-center justify-center p-4 rounded-2xl shadow-md bg-[#] hover:shadow-lg transition-all duration-300">
+        <p className="font-alata font-semibold text-2xl tracking-wide drop-shadow-sm hover:scale-105 transition-transform duration-300">
           Fakta Nguwawur
         </p>
       </section>
@@ -83,7 +76,7 @@ const App = () => {
 
       <div className="max-w-[500px] w-full h-[500px] relative">
 
-        <div className="w-full h-full bg-[#E3EAF2] rounded-2xl shadow-lg z-0"></div>
+        <div className="w-full h-full rounded-2xl shadow-lg z-0"></div>
 
 
         <div className="w-full h-full bg-white rounded-2xl shadow-xl absolute sm:top-[5%] sm:left-[5%] top-[1%] left-[1%] p-10 z-10">
@@ -93,7 +86,7 @@ const App = () => {
               width={200}
               src={"/logo.svg"}
               alt="Logo"
-              className="absolute inset-0 m-auto opacity-15 z-0 animate-float-slow select-none"
+              className="absolute inset-0 m-auto opacity-15 z-0 animate-bounce-slow select-none"
             />
 
             <div className="relative z-10 text-[#2E2E2E]">
@@ -104,14 +97,14 @@ const App = () => {
       </div>
 
 
-      <section className="w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md bg-[#E3EAF2]">
+      <section className="w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md ">
         <div className="relative flex items-center">
           <button
             disabled={loading}
             className={`smooth ${loading
               ? "opacity-35 cursor-not-allowed"
               : "opacity-100 cursor-pointer"
-              } text-[#295A8C]`}
+              }`}
             onClick={handleCopy}
           >
             {copied ? <Check /> : <Copy />}
@@ -127,7 +120,7 @@ const App = () => {
         </div>
 
         <p
-          className={`font-alata smooth-slow text-[#295A8C] font-semibold ${loading ? "opacity-0" : "opacity-100"
+          className={`font-alata smooth-slow ] font-semibold ${loading ? "opacity-0" : "opacity-100"
             }`}
         >
           {origin == "id" ? "indonesia" : origin == "su" ? "sunda" : "jawa"}
@@ -148,7 +141,7 @@ const App = () => {
             className={`smooth ${loading
               ? "opacity-35 cursor-not-allowed"
               : "opacity-100 cursor-pointer"
-              } text-[#295A8C]`}
+              }`}
           >
             <StepForward />
           </button>
