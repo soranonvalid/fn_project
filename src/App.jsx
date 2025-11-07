@@ -65,51 +65,59 @@ const App = () => {
     getFact();
   }, []);
   return (
-    <main className="h-screen w-screen flex flex-col sm:px-20 px-4 gap-20 justify-center items-center bg-gradient-to-tr from-[#295A8C] to-[#f1f1f1]">
-      <section className="w-full max-w-[600px] flex items-center justify-center bg-[#99D0F5] p-4 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
-        <p className="font-playfair text-2xl  text-white tracking-wide drop-shadow-md hover:scale-105 transition-transform duration-300">
+    <main className="h-screen w-screen flex flex-col sm:px-20 px-4 gap-20 justify-center bg-[#f1f1f1] items-center text-[#2E2E2E]">
+
+      <section className="w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md bg-[#E3EAF2] hover:shadow-lg transition-all duration-300">
+        <img
+          height={48}
+          width={48}
+          src={"/logo.svg"}
+          alt="Logo"
+          className="animate-bounce-slow"
+        />
+        <p className="font-alata font-semibold text-2xl tracking-wide text-[#295A8C] drop-shadow-sm hover:scale-105 transition-transform duration-300">
           Fakta Nguwawur
         </p>
       </section>
 
-      <div className="max-w-[500px] w-full h-[500px] relative flex items-center justify-center">
-        {/* Latar belakang luar */}
-        <div className="absolute inset-0 bg-[#99D0F5] rounded-[2rem] shadow-2xl" />
 
-        {/* Card depan dengan efek kaca */}
-        <div className="relative w-[92%] h-[92%] bg-[#f1f1f1] rounded-[2rem] shadow-lg p-10 flex items-center justify-center hover:shadow-2xl overflow-hidden">
+      <div className="max-w-[500px] w-full h-[500px] relative">
 
-          {/* Logo tengah di belakang teks */}
-          <img
-            src="/logo.svg"
-            alt="Logo"
-            height={180}
-            width={180}
-            className="absolute inset-0 m-auto opacity-15 z-0 animate-bounce-slow select-none"
-          />
+        <div className="w-full h-full bg-[#E3EAF2] rounded-2xl shadow-lg z-0"></div>
 
-          {/* Teks */}
-          <div className="relative z-10 text-center">
-            <FactText fact={fact} trueFact={trueFact} loading={loading} />
+
+        <div className="w-full h-full bg-white rounded-2xl shadow-xl absolute sm:top-[5%] sm:left-[5%] top-[1%] left-[1%] p-10 z-10">
+          <div className="relative w-full h-full">
+            <img
+              height={200}
+              width={200}
+              src={"/logo.svg"}
+              alt="Logo"
+              className="absolute inset-0 m-auto opacity-15 z-0 animate-float-slow select-none"
+            />
+
+            <div className="relative z-10 text-[#2E2E2E]">
+              <FactText fact={fact} trueFact={trueFact} loading={loading} />
+            </div>
           </div>
         </div>
       </div>
 
 
-      <section className="w-full max-w-[600px] flex items-center justify-between bg-[#99D0F5] p-4 rounded-2xl shadow-lg">
+      <section className="w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md bg-[#E3EAF2]">
         <div className="relative flex items-center">
           <button
             disabled={loading}
             className={`smooth ${loading
               ? "opacity-35 cursor-not-allowed"
               : "opacity-100 cursor-pointer"
-              }`}
+              } text-[#295A8C]`}
             onClick={handleCopy}
           >
             {copied ? <Check /> : <Copy />}
           </button>
           <p
-            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] left-[150%] ${copied
+            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] left-[150%] text-[#4A7856] ${copied
               ? "opacity-100 translate-x-0"
               : "opacity-0 translate-x-[30%]"
               }`}
@@ -117,15 +125,17 @@ const App = () => {
             copied!
           </p>
         </div>
+
         <p
-          className={`playfair smooth-slow ${loading ? "opacity-0" : "opacity-100"
+          className={`font-alata smooth-slow text-[#295A8C] font-semibold ${loading ? "opacity-0" : "opacity-100"
             }`}
         >
           {origin == "id" ? "indonesia" : origin == "su" ? "sunda" : "jawa"}
         </p>
+
         <div className="relative flex items-center">
           <p
-            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] right-[150%] ${loading
+            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] right-[150%] text-[#4A7856] ${loading
               ? "opacity-100 translate-x-0"
               : "opacity-0 translate-x-[-30%]"
               }`}
@@ -133,20 +143,19 @@ const App = () => {
             Loading
           </p>
           <button
-            onClick={() => {
-              getFact();
-            }}
+            onClick={getFact}
             disabled={loading}
             className={`smooth ${loading
               ? "opacity-35 cursor-not-allowed"
               : "opacity-100 cursor-pointer"
-              }`}
+              } text-[#295A8C]`}
           >
             <StepForward />
           </button>
         </div>
       </section>
     </main>
+
   );
 };
 
