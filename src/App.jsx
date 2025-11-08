@@ -2,14 +2,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FactText from "./components/text";
-import { Check, Copy, StepForward } from "lucide-react";
+import { Check, Copy, StepForward, Moon, Sun } from "lucide-react";
 
 const App = () => {
   const [fact, setFact] = useState("");
   const [origin, setOrigin] = useState("");
   const [trueFact, setTrueFact] = useState("");
   const [loading, setLoading] = useState(true);
-  const [copied, setCopied] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const api = import.meta.env.VITE_API_KEY;
   const target = ["id", "su", "jw"];
 
@@ -37,118 +38,137 @@ const App = () => {
           text: rawFact,
         },
       };
-      try {
-        const trans = await axios.request(options);
-        setFact(trans.data.trans);
-        setTrueFact(rawFact);
-        setOrigin(targetTo);
-      } catch (err) {
-        console.error(err);
-        return;
-      }
+
+      const trans = await axios.request(options);
+      setFact(trans.data.trans);
+      setTrueFact(rawFact);
+      setOrigin(targetTo);
     } catch (err) {
-      console.error(err);
-      return;
+      console.error("Error fetching fact:", err);
     } finally {
-      console.log("fact fetched...");
       setLoading(false);
     }
   };
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(fact);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    try {
+      await navigator.clipboard.writeText(fact);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (err) {
+      console.error("Clipboard copy failed:", err);
+    }
   };
 
   useEffect(() => {
     getFact();
   }, []);
-  return (
-    <main className="h-screen w-screen flex flex-col sm:px-20 px-4 gap-20 justify-center bg-[#f1f1f1] items-center text-[#2E2E2E]">
 
-      <section className="w-full max-w-[600px] flex items-center justify-center p-4 rounded-2xl shadow-md bg-[#] hover:shadow-lg transition-all duration-300">
-        <p className="font-alata font-semibold text-2xl tracking-wide drop-shadow-sm hover:scale-105 transition-transform duration-300">
+  return (
+    <main
+      className={`h-screen w-screen flex flex-col sm:px-20 px-4 gap-20 justify-center items-center transition-colors duration-500 ${darkMode ? "bg-[#1e1e1e] text-[#f5f5f5]" : "bg-[#f1f1f1] text-[#2E2E2E]"
+        }`}
+    >
+      <section className="relative w-full max-w-[600px] flex items-center justify-center p-4 rounded-2xl shadow-md transition-all duration-300">
+        <p className="font-alata font-semibold text-2xl tracking-wide drop-shadow-sm hover:scale-105 transition-transform duration-300 select-none">
           Fakta Nguwawur
         </p>
+
+        <button
+          type="button"
+          onClick={() => setDarkMode((prev) => !prev)}
+          className="absolute right-4 p-2 rounded-full hover:scale-110 transition-all"
+          aria-label="Toggle dark mode"
+        >
+          {darkMode ? <Sun size={22} /> : <Moon size={22} />}
+        </button>
       </section>
 
-
       <div className="max-w-[500px] w-full h-[500px] relative">
-
-        <div className="w-full h-full rounded-2xl shadow-lg z-0"></div>
-
-
-        <div className="w-full h-full bg-white rounded-2xl shadow-xl absolute sm:top-[5%] sm:left-[5%] top-[1%] left-[1%] p-10 z-10">
+        <div className="w-full h-full rounded-2xl shadow-lg z-0" />
+        <div
+          className={`w-full h-full rounded-2xl shadow-xl absolute sm:top-[5%] sm:left-[5%] top-[1%] left-[1%] p-10 z-10 transition-colors duration-500 ${darkMode ? "bg-[#2b2b2b]" : "bg-white"
+            }`}
+        >
           <div className="relative w-full h-full">
             <img
               height={200}
               width={200}
-              src={"/logo.svg"}
+              src="/logo.svg"
               alt="Logo"
               className="absolute inset-0 m-auto opacity-15 z-0 animate-bounce-slow select-none"
             />
-
-            <div className="relative z-10 text-[#2E2E2E]">
+            <div className="relative z-10">
               <FactText fact={fact} trueFact={trueFact} loading={loading} />
             </div>
           </div>
         </div>
       </div>
 
+      <section
+        className={`w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md transition-colors duration-500 ${darkMode ? "bg-[#2b2b2b]" : "bg-white"
+          }`}
+      >
 
-      <section className="w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md ">
         <div className="relative flex items-center">
           <button
+            type="button"
             disabled={loading}
+            onClick={handleCopy}
             className={`smooth ${loading
               ? "opacity-35 cursor-not-allowed"
               : "opacity-100 cursor-pointer"
               }`}
-            onClick={handleCopy}
+            aria-label="Copy fact"
           >
             {copied ? <Check /> : <Copy />}
           </button>
           <p
-            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] left-[150%] text-[#4A7856] ${copied
+            className={`playfair smooth text-sm font-light absolute top-1/2 -translate-y-1/2 left-[150%] text-[#4A7856] ${copied
               ? "opacity-100 translate-x-0"
               : "opacity-0 translate-x-[30%]"
               }`}
           >
-            copied!
+            Copied!
           </p>
         </div>
 
+
         <p
-          className={`font-alata smooth-slow ] font-semibold ${loading ? "opacity-0" : "opacity-100"
+          className={`font-alata smooth-slow font-semibold ${loading ? "opacity-0" : "opacity-100"
             }`}
         >
-          {origin == "id" ? "indonesia" : origin == "su" ? "sunda" : "jawa"}
+          {origin === "id"
+            ? "indonesia"
+            : origin === "su"
+              ? "sunda"
+              : "jawa"}
         </p>
 
         <div className="relative flex items-center">
           <p
-            className={`playfair smooth text-sm font-light absolute top-[50%] translate-y-[-50%] right-[150%] text-[#4A7856] ${loading
+            className={`playfair smooth text-sm font-light absolute top-1/2 -translate-y-1/2 right-[150%] text-[#4A7856] ${loading
               ? "opacity-100 translate-x-0"
-              : "opacity-0 translate-x-[-30%]"
+              : "opacity-0 -translate-x-[30%]"
               }`}
           >
             Loading
           </p>
           <button
+            type="button"
             onClick={getFact}
             disabled={loading}
             className={`smooth ${loading
               ? "opacity-35 cursor-not-allowed"
               : "opacity-100 cursor-pointer"
               }`}
+            aria-label="Next fact"
           >
             <StepForward />
           </button>
         </div>
       </section>
     </main>
-
   );
 };
 
