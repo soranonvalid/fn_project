@@ -14,22 +14,18 @@ const App = () => {
   const target = ["id", "su", "jw"];
   const api = import.meta.env.VITE_RAPIDAPI_KEY;
 
-
-
   const getFact = async () => {
     setLoading(true);
     const rand = Math.floor(Math.random() * target.length);
     const targetTo = target[rand];
 
     try {
-      // Ambil fakta acak dari uselessfacts API
       const res = await axios.get(
         "https://uselessfacts.jsph.pl/api/v2/facts/random?language=en"
       );
 
       const rawFact = res.data.text;
 
-      // Endpoint & body yang benar untuk Google Translate 113 di RapidAPI
       const options = {
         method: "POST",
         url: "https://google-translate113.p.rapidapi.com/api/v1/translator/text",
@@ -56,7 +52,6 @@ const App = () => {
     }
   };
 
-
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(fact);
@@ -78,14 +73,13 @@ const App = () => {
       }`}
     >
       <section
-        className={`relative w-full max-w-[600px] flex items-center justify-between sm:justify-center p-4 rounded-2xl shadow-md transition-all duration-300 ${
+        className={`relative w-full max-w-[600px] flex items-center justify-between sm:justify-center p-4 rounded-2xl shadow-md smooth ${
           darkMode ? "bg-[#2b2b2b]" : "bg-white"
         }`}
       >
-        <p className="playfair font-semibold text-xl tracking-wide drop-shadow-sm hover:scale-105 transition-transform duration-300 select-none">
+        <p className="playfair font-semibold tracking-wide drop-shadow-sm hover:scale-105 transition-transform duration-300 select-none">
           Fakta Nguwawur
         </p>
-
 
         <button
           type="button"
@@ -96,7 +90,6 @@ const App = () => {
           {darkMode ? <Sun size={22} /> : <Moon size={22} />}
         </button>
       </section>
-
 
       <div className="max-w-[500px] w-full h-[500px] relative">
         <div className={`w-full h-full rounded-2xl shadow-lg z-0`} />
@@ -122,7 +115,6 @@ const App = () => {
         </div>
       </div>
 
-
       <section
         className={`w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md transition-colors duration-500 ${
           darkMode ? "bg-[#2b2b2b]" : "bg-white"
@@ -143,7 +135,7 @@ const App = () => {
             {copied ? <Check /> : <Copy />}
           </button>
           <p
-            className={`playfair smooth text-sm font-light absolute top-1/2 -translate-y-1/2 left-[150%] text-[#4A7856] ${
+            className={`playfair smooth text-sm font-light absolute top-1/2 -translate-y-1/2 left-[150%] ${
               copied
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 translate-x-[30%]"
@@ -161,10 +153,9 @@ const App = () => {
           {origin === "id" ? "indonesia" : origin === "su" ? "sunda" : "jawa"}
         </p>
 
-
         <div className="relative flex items-center">
           <p
-            className={`playfair smooth text-sm font-light absolute top-1/2 -translate-y-1/2 right-[150%] text-[#4A7856] ${
+            className={`playfair smooth text-sm font-light absolute top-1/2 -translate-y-1/2 right-[150%] ${
               loading
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 -translate-x-[30%]"
