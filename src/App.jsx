@@ -11,26 +11,32 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const api = import.meta.env.VITE_API_KEY;
   const target = ["id", "su", "jw"];
+  const api = import.meta.env.VITE_RAPIDAPI_KEY;
+
+
 
   const getFact = async () => {
     setLoading(true);
     const rand = Math.floor(Math.random() * target.length);
     const targetTo = target[rand];
+
     try {
+      // Ambil fakta acak dari uselessfacts API
       const res = await axios.get(
         "https://uselessfacts.jsph.pl/api/v2/facts/random?language=en"
       );
 
       const rawFact = res.data.text;
+
+      // Endpoint & body yang benar untuk Google Translate 113 di RapidAPI
       const options = {
         method: "POST",
         url: "https://google-translate113.p.rapidapi.com/api/v1/translator/text",
         headers: {
+          "content-type": "application/json",
           "x-rapidapi-key": api,
           "x-rapidapi-host": "google-translate113.p.rapidapi.com",
-          "Content-Type": "application/json",
         },
         data: {
           from: "en",
@@ -49,6 +55,7 @@ const App = () => {
       setLoading(false);
     }
   };
+
 
   const handleCopy = async () => {
     try {
@@ -74,6 +81,7 @@ const App = () => {
           Fakta Nguwawur
         </p>
 
+
         <button
           type="button"
           onClick={() => setDarkMode((prev) => !prev)}
@@ -83,6 +91,7 @@ const App = () => {
           {darkMode ? <Sun size={22} /> : <Moon size={22} />}
         </button>
       </section>
+
 
       <div className="max-w-[500px] w-full h-[500px] relative">
         <div className="w-full h-full rounded-2xl shadow-lg z-0" />
@@ -104,6 +113,7 @@ const App = () => {
           </div>
         </div>
       </div>
+
 
       <section
         className={`w-full max-w-[600px] flex items-center justify-between p-4 rounded-2xl shadow-md transition-colors duration-500 ${darkMode ? "bg-[#2b2b2b]" : "bg-white"
@@ -144,6 +154,7 @@ const App = () => {
               ? "sunda"
               : "jawa"}
         </p>
+
 
         <div className="relative flex items-center">
           <p
